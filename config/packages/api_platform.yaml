@@ -1,0 +1,36 @@
+# api_platform.yaml
+
+api_platform:
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity']
+    swagger:
+        versions: [3]
+    collection:
+        pagination:
+            enabled: true
+    # Configure the endpoint for the collection of comments
+    entities:
+        Comment:
+            collectionOperations:
+                get:
+                    normalization_context:
+                        groups: ['read:Comment']
+                post:
+                    validation_groups: ['create']
+                    normalization_context:
+                        groups: ['read:Comment']
+                    denormalization_context:
+                        groups: ['write:Comment']
+    # Configure the endpoint for an individual comment
+    itemOperations:
+        get:
+            normalization_context:
+                groups: ['read:Comment']
+        put:
+            validation_groups: ['update']
+            normalization_context:
+                groups: ['read:Comment']
+            denormalization_context:
+                groups: ['write:Comment']
+        delete:
+            validation_groups: ['delete']
